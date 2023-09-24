@@ -35,16 +35,17 @@ enum layers {
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
+#define SFT_SPC  MT(MOD_LSFT, KC_SPC)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Base Layer: QWERTY
 
     [_QWERTY] = LAYOUT(
-     KC_ESC  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                       KC_Y,  KC_U ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
-     KC_LSFT , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                       KC_H,  KC_J ,  KC_K ,   KC_L ,KC_SCLN, KC_RSFT,
-     KC_LCTL , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B , _______, _______, _______, _______,   KC_N,  KC_M ,KC_COMM, KC_DOT ,KC_SLSH, _______,
-                                KC_LGUI, KC_LALT,  KC_ENT, KC_SPC ,  RAISE ,  LOWER , KC_SPC , KC_TAB,KC_RALT,KC_RGUI
+     KC_ESC  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                       KC_Y,  KC_U ,  KC_I ,   KC_O ,  KC_P , KC_PIPE,
+     KC_LSFT , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                       KC_H,  KC_J ,  KC_K ,   KC_L ,KC_SCLN, KC_QUOT,
+     KC_LCTL , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B ,  KC_GRV, _______,  KC_DEL, QK_LEAD,   KC_N,  KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_MINS,
+                                KC_LGUI, KC_LALT,   RAISE, SFT_SPC, ALT_ENT, KC_BSPC,  KC_SPC,  LOWER, KC_TAB, KC_RALT
     ),
 
 // Lower Layer: Symbol
@@ -111,7 +112,7 @@ bool oled_task_user(void) {
         // clang-format on
 
         oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+        oled_write_P(PSTR("Kyria rev3.1\n\n"), false);
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
