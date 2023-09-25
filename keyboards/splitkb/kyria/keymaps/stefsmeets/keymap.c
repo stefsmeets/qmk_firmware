@@ -15,11 +15,13 @@
  */
 #include QMK_KEYBOARD_H
 
+
 enum layers {
     _QWERTY = 0,
-    _LOWER,
-    _RAISE,
-    // _NAV,
+    _SYMBOL,
+    _NAV,
+    _NUMs,
+    _FUNCTION,
     _ADJUST,
 };
 
@@ -27,8 +29,10 @@ enum layers {
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 
-#define LOWER    MO(_LOWER)
-#define RAISE    MO(_RAISE)
+#define SYM      MO(_SYMBOL)
+#define NAV      MO(_NAV)
+#define NUM      MO(_NUM)
+#define FUNC     MO(_FUNCTION)
 #define ADJUST   MO(_ADJUST)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
@@ -36,42 +40,68 @@ enum layers {
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT  MT(MOD_LALT, KC_ENT)
 #define SFT_SPC  MT(MOD_LSFT, KC_SPC)
+#define SFT_TAB  MT(MOD_LSFT, KC_TAB)
+#define SFT_QUO  MT(MOD_RSFT, KC_QUOT)
+
+#define FUN_ENT  MT(FUNC, KC_ENT)
+#define SYM_BKS  MT(SYM, KC_BSPC)
+
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Base Layer: QWERTY
 
     [_QWERTY] = LAYOUT(
-     KC_ESC  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                       KC_Y,  KC_U ,  KC_I ,   KC_O ,  KC_P , KC_PIPE,
-     KC_LSFT , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                       KC_H,  KC_J ,  KC_K ,   KC_L ,KC_SCLN, KC_QUOT,
-     KC_LCTL , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B ,  KC_GRV, _______,  KC_DEL, QK_LEAD,   KC_N,  KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_MINS,
-                                KC_LGUI, KC_LALT,   RAISE, SFT_SPC, ALT_ENT, KC_BSPC,  KC_SPC,  LOWER, KC_TAB, KC_RALT
+      KC_ESC ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,   KC_P , KC_BSPC,
+      SFT_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, SFT_QUO,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  KC_GRV, KC_PSCR,  KC_DEL, QK_LEAD,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
+                                 KC_LGUI, KC_LALT,     NUM, SFT_SPC, FUN_ENT, SYM_BKS, SFT_SPC,     NAV,  KC_TAB, KC_RALT
     ),
 
-// Lower Layer: Symbol
+// Layer: Neo symbols
+// https://github.com/Dakes/qmk_config/blob/main/kyria/keymaps/dakes/keymap.c
+// https://www.neo-layout.org/
 
-    [_LOWER] = LAYOUT(
-      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, KC_UNDS, ALGR(KC_5),_______,_______,_______,
-      _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, _______,
-      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, _______,
+    [_SYM] = LAYOUT(
+      _______,   KC_AT, KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC,                                     KC_EXLM, KC_LABK, KC_RABK,  KC_EQL, KC_AMPR, _______,
+      _______, KC_BSLS, KC_SLSH, KC_LCBR, KC_RCBR, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN,   KC_AT,
+      _______, KC_HASH,  KC_DLR, KC_PIPE, KC_TILD, KC_GRV , _______, _______, _______, _______, KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
-//  Layer: Nav / Num
+//  Layer: Navigation
 
-    [_RAISE] = LAYOUT(
-      _______, _______, KC_HOME, _______,  KC_END, KC_PGUP,                                     KC_SLSH, KC_7,    KC_8,    KC_9, KC_MINS, _______,
-      _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     KC_ASTR, KC_4,    KC_5,    KC_6, KC_COMM, KC_PLUS,
-      _______, _______, KC_BSLS, KC_DOWN, KC_BSLS,  KC_DEL, _______, KC_CAPS, KC_SCRL, _______, KC_0,    KC_1,    KC_2,    KC_3, KC_EQL,  _______,
+    [_NAV] = LAYOUT(
+      _______, _______, KC_HOME, _______,  KC_END, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, LC_LALT, LC_LGUI, _______,
+      _______, _______, KC_BSLS, KC_DOWN, KC_BSLS,  KC_DEL, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
-// Adjust Layer: F-keys, navigation
+//  Layer: Number
+
+    [_NUM] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     KC_SLSH,    KC_7,    KC_8,    KC_9, KC_MINS, _______,
+      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR,    KC_4,    KC_5,    KC_6, KC_COMM, KC_PLUS,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    KC_0,    KC_1,    KC_2,    KC_3,  KC_EQL, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
+//  Layer: Function
+
+    [_FUNCTION] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
+      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     _______,   KC_F4,   KC_F5,   KC_F6,  KC_F11, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_F1,   KC_F2,   KC_F3,  KC_F12, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
+// Adjust Layer: Music, Locks
 
     [_ADJUST] = LAYOUT(
-      _______, _______, _______, KC_MPLY, _______, _______,                                     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-      _______, _______, KC_MPRV, KC_VOLU, KC_MNXT, _______,                                     _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,  _______,
-      _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______,
+      _______, _______, _______, KC_MPLY, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_MPRV, KC_VOLU, KC_MNXT, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, KC_CAPS, KC_SCRL, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -95,7 +125,7 @@ void keyboard_pre_init_user(void) {
 
 // https://docs.qmk.fm/#/ref_functions?id=update_tri_layer_statestate-x-y-z
 layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    return update_tri_layer_state(state, _NAV, _NUM, _ADJUST);
 }
 
 #ifdef OLED_ENABLE
@@ -120,11 +150,17 @@ bool oled_task_user(void) {
             case _QWERTY:
                 oled_write_P(PSTR("QWERTY\n"), false);
                 break;
-            case _RAISE:
-                oled_write_P(PSTR("Raise\n"), false);
+            case _NAV:
+                oled_write_P(PSTR("Navigation\n"), false);
                 break;
-            case _LOWER:
-                oled_write_P(PSTR("Lower\n"), false);
+            case _SYMBOL:
+                oled_write_P(PSTR("Symbol\n"), false);
+                break;
+            case _NUM:
+                oled_write_P(PSTR("Number\n"), false);
+                break;
+            case _FUNCTION:
+                oled_write_P(PSTR("Function\n"), false);
                 break;
             case _ADJUST:
                 oled_write_P(PSTR("Adjust\n"), false);
