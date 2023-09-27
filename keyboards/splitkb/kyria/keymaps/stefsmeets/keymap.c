@@ -20,7 +20,7 @@ enum layers {
     _QWERTY = 0,
     _SYMBOL,
     _NAV,
-    _NUMs,
+    _NUM,
     _FUNCTION,
     _ADJUST,
 };
@@ -43,8 +43,8 @@ enum layers {
 #define SFT_TAB  MT(MOD_LSFT, KC_TAB)
 #define SFT_QUO  MT(MOD_RSFT, KC_QUOT)
 
-#define FUN_ENT  MT(FUNC, KC_ENT)
-#define SYM_BKS  MT(SYM, KC_BSPC)
+#define FUN_ENT  LT(_FUNCTION, KC_ENT)
+#define SYM_BKS  LT(_SYMBOL, KC_BSPC)
 
 
 // clang-format off
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // https://github.com/Dakes/qmk_config/blob/main/kyria/keymaps/dakes/keymap.c
 // https://www.neo-layout.org/
 
-    [_SYM] = LAYOUT(
+    [_SYMBOL] = LAYOUT(
       _______,   KC_AT, KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC,                                     KC_EXLM, KC_LABK, KC_RABK,  KC_EQL, KC_AMPR, _______,
       _______, KC_BSLS, KC_SLSH, KC_LCBR, KC_RCBR, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN,   KC_AT,
       _______, KC_HASH,  KC_DLR, KC_PIPE, KC_TILD, KC_GRV , _______, _______, _______, _______, KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN, _______,
@@ -72,9 +72,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  Layer: Navigation
 
     [_NAV] = LAYOUT(
-      _______, _______, KC_HOME, _______,  KC_END, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, LC_LALT, LC_LGUI, _______,
-      _______, _______, KC_BSLS, KC_DOWN, KC_BSLS,  KC_DEL, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_HOME,  KC_TAB,  KC_END, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
+      _______, _______, KC_BSPC, KC_DOWN, KC_DEL,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
