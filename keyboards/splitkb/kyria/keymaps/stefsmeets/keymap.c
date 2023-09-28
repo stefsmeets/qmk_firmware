@@ -44,7 +44,7 @@ enum layers {
 #define SFT_QUO  MT(MOD_RSFT, KC_QUOT)
 
 #define FUN_ENT  LT(_FUNCTION, KC_ENT)
-#define SYM_BKS  LT(_SYMBOL, KC_BSPC)
+#define NUM_ENT  LT(_NUM, KC_ENT)
 
 
 // clang-format off
@@ -54,8 +54,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
       KC_ESC ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,   KC_P , KC_BSPC,
       SFT_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, SFT_QUO,
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  KC_GRV, KC_PSCR,  KC_DEL, QK_LEAD,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
-                                 KC_LGUI, KC_LALT,     NUM, SFT_SPC, FUN_ENT, SYM_BKS, SFT_SPC,     NAV,  KC_TAB, KC_RALT
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_CAPS, KC_PSCR,    FUNC, QK_LEAD,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
+                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, NUM_ENT, KC_LSFT,  KC_SPC,     NAV, KC_BSPC, KC_DEL
     ),
 
 // Layer: Neo symbols
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYMBOL] = LAYOUT(
       _______,   KC_AT, KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC,                                     KC_EXLM, KC_LABK, KC_RABK,  KC_EQL, KC_AMPR, _______,
-      _______, KC_BSLS, KC_SLSH, KC_LCBR, KC_RCBR, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN,   KC_AT,
+      _______, KC_BSLS, KC_SLSH, KC_LCBR, KC_RCBR, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN, _______,
       _______, KC_HASH,  KC_DLR, KC_PIPE, KC_TILD, KC_GRV , _______, _______, _______, _______, KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -72,9 +72,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  Layer: Navigation
 
     [_NAV] = LAYOUT(
-      _______, _______, KC_HOME,  KC_TAB,  KC_END, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
-      _______, _______, KC_BSPC, KC_DOWN, KC_DEL,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_HOME,   KC_UP,  KC_END, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
+      _______, _______, KC_BSPC, _______, KC_DEL,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -99,9 +99,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Adjust Layer: Music, Locks
 
     [_ADJUST] = LAYOUT(
-      _______, _______, _______, KC_MPLY, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_MPRV, KC_VOLU, KC_MNXT, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, KC_VOLD, KC_MUTE, _______, _______, KC_CAPS, KC_SCRL, _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, KC_VOLU, _______, _______,                                     KC_CAPS, _______, _______, _______, _______, _______,
+      _______, _______, KC_MPRV, KC_VOLD, KC_MNXT, _______,                                     KC_SCRL, _______, _______, _______, _______, _______,
+      _______, _______, _______, KC_MPLY, KC_MUTE, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -135,35 +135,52 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // QMK Logo and version information
         // clang-format off
-        static const char PROGMEM qmk_logo[] = {
-            0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-            0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-            0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
+        // static const char PROGMEM qmk_logo[] = {
+        //     0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+        //     0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+        //     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
         // clang-format on
 
-        oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev3.1\n\n"), false);
+        // oled_write_P(qmk_logo, false);
 
         // Host Keyboard Layer Status
         oled_write_P(PSTR("Layer: "), false);
         switch (get_highest_layer(layer_state|default_layer_state)) {
             case _QWERTY:
-                oled_write_P(PSTR("QWERTY\n"), false);
+                oled_write_P(PSTR("QWERTY\n\n"), false);
+                oled_write_P(PSTR("q w e r t  y u i o p\n"), false);
+                oled_write_P(PSTR("a s d f g  h j k l ;\n"), false);
+                oled_write_P(PSTR("z x c v b  n m , . /\n"), false);
                 break;
             case _NAV:
-                oled_write_P(PSTR("Navigation\n"), false);
+                oled_write_P(PSTR("Navigation\n\n"), false);
+                oled_write_P(PSTR(". h ^ e up . . . . .\n"), false);
+                oled_write_P(PSTR(". < v > dn . S C A G\n"), false);
+                oled_write_P(PSTR(". b . d .  . . . . .\n"), false);
                 break;
             case _SYMBOL:
-                oled_write_P(PSTR("Symbol\n"), false);
+                oled_write_P(PSTR("Symbol\n\n"), false);
+                oled_write_P(PSTR("@ _ [ ] ^  ! < > = &\n"), false);
+                oled_write_P(PSTR("\\ / { } *  ? ( ) - :\n"), false);
+                oled_write_P(PSTR("# $ | ~ `  + % \" ' ;\n"), false);
                 break;
             case _NUM:
-                oled_write_P(PSTR("Number\n"), false);
+                oled_write_P(PSTR("Number\n\n"), false);
+                oled_write_P(PSTR(". . . . .  / 7 8 9 -\n"), false);
+                oled_write_P(PSTR("G A C S .  * 4 5 6 ,\n"), false);
+                oled_write_P(PSTR(". . . . .  0 1 2 3 =\n"), false);
                 break;
             case _FUNCTION:
-                oled_write_P(PSTR("Function\n"), false);
+                oled_write_P(PSTR("Function\n\n"), false);
+                oled_write_P(PSTR(". . . . .  . 7 8 9 0\n"), false);
+                oled_write_P(PSTR("G A C S .  . 4 5 6 1\n"), false);
+                oled_write_P(PSTR(". . . . .  . 1 2 3 2\n"), false);
                 break;
             case _ADJUST:
-                oled_write_P(PSTR("Adjust\n"), false);
+                oled_write_P(PSTR("Adjust\n\n"), false);
+                oled_write_P(PSTR(". . ^ . .  . . . . .\n"), false);
+                oled_write_P(PSTR(".<< v >>.  . S C A G\n"), false);
+                oled_write_P(PSTR(". . p m .  . . . . .\n"), false);
                 break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
@@ -171,9 +188,9 @@ bool oled_task_user(void) {
 
         // Write host Keyboard LED Status to OLEDs
         led_t led_usb_state = host_keyboard_led_state();
-        oled_write_P(led_usb_state.num_lock    ? PSTR("NUMLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.caps_lock   ? PSTR("CAPLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
+        oled_write_P(led_usb_state.num_lock    ? PSTR("\nNUM ") : PSTR("\n    "), false);
+        oled_write_P(led_usb_state.caps_lock   ? PSTR("CAP ") : PSTR("    "), false);
+        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
     } else {
         // clang-format off
         static const char PROGMEM kyria_logo[] = {
