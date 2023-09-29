@@ -125,7 +125,7 @@ void keyboard_pre_init_user(void) {
 
 // https://docs.qmk.fm/#/ref_functions?id=update_tri_layer_statestate-x-y-z
 layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _NAV, _NUM, _ADJUST);
+    return update_tri_layer_state(state, _NAV, _SYM, _ADJUST);
 }
 
 #ifdef OLED_ENABLE
