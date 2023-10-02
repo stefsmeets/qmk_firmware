@@ -160,10 +160,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Layer: Neo symbols
 // https://github.com/Dakes/qmk_config/blob/main/kyria/keymaps/dakes/keymap.c
 // https://www.neo-layout.org/
+// 20231002 Swap position [] and {}
 
     [_SYMBOL] = LAYOUT(
-      _______,   KC_AT, KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC,                                     KC_EXLM, KC_LABK, KC_RABK,  KC_EQL, KC_AMPR, _______,
-      _______, KC_BSLS, KC_SLSH, KC_LCBR, KC_RCBR, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN, _______,
+      _______,   KC_AT, KC_UNDS, KC_LCBR, KC_RCBR, KC_CIRC,                                     KC_EXLM, KC_LABK, KC_RABK,  KC_EQL, KC_AMPR, _______,
+      _______, KC_BSLS, KC_SLSH, KC_LBRC, KC_RBRC, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN, _______,
       _______, KC_HASH,  KC_DLR, KC_PIPE, KC_TILD, KC_GRV , _______, _______, _______, _______, KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -181,7 +182,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NUM] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_SLSH,    KC_7,    KC_8,    KC_9, KC_MINS, _______,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR,    KC_4,    KC_5,    KC_6, KC_COMM, KC_PLUS,
+      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR,    KC_4,    KC_5,    KC_6,  KC_DOT, KC_PLUS,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    KC_0,    KC_1,    KC_2,    KC_3,  KC_EQL, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
