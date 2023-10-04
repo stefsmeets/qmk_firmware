@@ -13,3 +13,5 @@ CAPS_WORD_ENABLE = yes
 
 # https://docs.qmk.fm/#/feature_tap_dance
 TAP_DANCE_ENABLE = yes
+
+# SRC += emoji.c

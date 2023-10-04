@@ -15,9 +15,12 @@
  */
 #include QMK_KEYBOARD_H
 
+#include "emoji.h"
 
 enum layers {
     _QWERTY = 0,
+    _COLEMAK,
+    _GAME,
     _SYMBOL,
     _NAV,
     _NUM,
@@ -28,6 +31,8 @@ enum layers {
 
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
+#define COLEMAK  DF(_COLEMAK)
+#define GAME     DF(_GAME)
 
 #define SYM      MO(_SYMBOL)
 #define NAV      MO(_NAV)
@@ -45,7 +50,6 @@ enum layers {
 
 #define FUN_ENT  LT(_FUNCTION, KC_ENT)
 #define NUM_ENT  LT(_NUM, KC_ENT)
-
 
 // Tap Dance declarations
 enum {
@@ -72,115 +76,29 @@ tap_dance_action_t tap_dance_actions[] = {
 #define SFT_SFT  TD(_SFT_SFT)
 
 
-enum unicode_names {
-    UC_GRINNING_FACE, // 😃
-    UC_BEAMING_FACE, // 😁
-    UC_GRINNING_FACE_WITH_SWEAT, // 😅
-    UC_ROLLING_LAUGHING, // 🤣
-    UC_FACE_TEARS_JOY, // 😂
-    UC_WINKING_FACE, // 😉
-    UC_SMILING_FACE_HALO, // 😇
-    UC_SMILING_FACE_HEARTS, // 🥰
-    UC_SMILING_FACE_HEART_EYES, // 😍
-    UC_FACE_BLOWING_KISS, // 😘
-    UC_FACE_SAVORING_FOOD, // 😋
-    UC_ZANY_FACE, // 🤪
-    UC_HUGGING_FACE, // 🤗
-    UC_SHUSHING_FACE, // 🤫
-    UC_THINKING_FACE, // 🤔
-    UC_FACE_RAISED_EYEBROW, // 🤨
-    UC_NEUTRAL_FACE, // 😐
-    UC_SMIRKING_FACE, // 😏
-    UC_FACE_ROLLING_EYES, // 🙄
-    UC_PENSIVE_FACE, // 😔
-    UC_FACE_VOMITING, // 🤮
-    UC_WOOZY_FACE, // 🥴
-    UC_PLEADING_FACE, // 🥺
-    UC_LOUDLY_CRYING_FACE, // 😭
-    UC_DISAPPOINTED_FACE, // 😞
-    UC_FACE_SYMBOLS_MOUTH, // 🤬
-    UC_SMILING_FACE_HORNS, // 😈
-    UC_SKULL, // 💀
-    UC_PILE_POO, // 💩
-    UC_GHOST, // 👻
-    UC_ALIEN_MONSTER, // 👾
-    UC_RED_HEART, // ❤
-    UC_BOMB, // 💣
-    UC_WAVING_HAND, // 👋
-    UC_OK_HAND, // 👌
-    UC_CLAPPING_HANDS, // 👏
-    UC_EYES, // 👀
-    UC_MAN_FACEPALMING, // 🤦
-    UC_TURTLE, // 🐢
-    UC_SNAKE, // 🐍
-    UC_SPOUTING_WHALE, // 🐳
-    UC_DRAGON, // 🐉
-    UC_TREX, // 🦖
-    UC_ARGENTINA_A, // 🇦
-    UC_ARGENTINA_R, // 🇷
-    UC_THUMBSDOWN, // 👍
-    UC_THUMBSUP, // 👎
-};
-
-const uint32_t unicode_map[] PROGMEM = {
-    [UC_GRINNING_FACE] = 0x1F603,
-    [UC_BEAMING_FACE] = 0x1F601,
-    [UC_GRINNING_FACE_WITH_SWEAT] = 0x1F605,
-    [UC_ROLLING_LAUGHING] = 0x1F923,
-    [UC_FACE_TEARS_JOY] = 0x1F602,
-    [UC_WINKING_FACE] = 0x1F609,
-    [UC_SMILING_FACE_HALO] = 0x1F607,
-    [UC_SMILING_FACE_HEARTS] = 0x1F970,
-    [UC_SMILING_FACE_HEART_EYES] = 0x1F60D,
-    [UC_FACE_BLOWING_KISS] = 0x1F618,
-    [UC_FACE_SAVORING_FOOD] = 0x1F60B,
-    [UC_ZANY_FACE] = 0x1F92A,
-    [UC_HUGGING_FACE] = 0x1F917,
-    [UC_SHUSHING_FACE] = 0x1F92B,
-    [UC_THINKING_FACE] = 0x1F914,
-    [UC_FACE_RAISED_EYEBROW] = 0x1F928,
-    [UC_NEUTRAL_FACE] = 0x1F610,
-    [UC_SMIRKING_FACE] = 0x1F60F,
-    [UC_FACE_ROLLING_EYES] = 0x1F644,
-    [UC_PENSIVE_FACE] = 0x1F614,
-    [UC_FACE_VOMITING] = 0x1F92E,
-    [UC_WOOZY_FACE] = 0x1F974,
-    [UC_PLEADING_FACE] = 0x1F97A,
-    [UC_LOUDLY_CRYING_FACE] = 0x1F62D,
-    [UC_DISAPPOINTED_FACE] = 0x1F61E,
-    [UC_FACE_SYMBOLS_MOUTH] = 0x1F92C,
-    [UC_SMILING_FACE_HORNS] = 0x1F608,
-    [UC_SKULL] = 0x1F480,
-    [UC_PILE_POO] = 0x1F4A9,
-    [UC_GHOST] = 0x1F47B,
-    [UC_ALIEN_MONSTER] = 0x1F47E,
-    [UC_RED_HEART] = 0x2764,
-    [UC_BOMB] = 0x1F4A3,
-    [UC_WAVING_HAND] = 0x1F44B,
-    [UC_OK_HAND] = 0x1F44C,
-    [UC_CLAPPING_HANDS] = 0x1F44F,
-    [UC_EYES] = 0x1F440,
-    [UC_MAN_FACEPALMING] = 0x1F926,
-    [UC_TURTLE] = 0x1F422,
-    [UC_SNAKE] = 0x1F40D,
-    [UC_SPOUTING_WHALE] = 0x1F433,
-    [UC_DRAGON] = 0x1F409,
-    [UC_TREX] = 0x1F996,
-    [UC_ARGENTINA_A] = 0x1F1E6,
-    [UC_ARGENTINA_R] = 0x1F1F7,
-    [UC_THUMBSDOWN] = 0x1F44E,
-    [UC_THUMBSUP] = 0x1F44D,
-};
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Base Layer: QWERTY
 
     [_QWERTY] = LAYOUT(
-      KC_ESC ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,   KC_P , KC_BSPC,
+      KC_ESC ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC,
       SFT_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, SFT_QUO,
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_CAPS, KC_PSCR,    FUNC, QK_LEAD,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_CAPS,    FUNC, KC_PSCR, QK_LEAD,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
                                  KC_LGUI, KC_LALT,     SYM,  KC_SPC, NUM_ENT, SFT_SFT,  KC_SPC,     NAV, KC_BSPC, KC_DEL
+    ),
+
+    [_COLEMAK] = LAYOUT(
+      _______,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, _______,
+      _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
+      _______,    KC_Z,    KC_X,    KC_D,    KC_V,    KC_B, _______, _______, _______, _______,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
+    [_GAME] = LAYOUT(
+      _______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______,
+      _______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______,
+      _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______, _______, _______, _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 // Layer: Neo symbols
@@ -225,9 +143,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Adjust Layer: Music, Locks
 
     [_ADJUST] = LAYOUT(
-      _______, _______, _______, KC_VOLU, _______, _______,                                     UM(UC_THUMBSUP),    UM(UC_FACE_SYMBOLS_MOUTH), UM(UC_SMIRKING_FACE),     UM(UC_ZANY_FACE),                UM(UC_WINKING_FACE),      _______,
-      _______, _______, KC_MPRV, KC_VOLD, KC_MNXT, _______,                                     UM(UC_WAVING_HAND), UM(UC_GRINNING_FACE),      UM(UC_BEAMING_FACE),      UM(UC_GRINNING_FACE_WITH_SWEAT), UM(UC_FACE_TEARS_JOY),    _______,
-      _______, _______, _______, KC_MPLY, KC_MUTE, _______, _______, _______, _______, _______, UM(UC_THUMBSDOWN),  UM(UC_LOUDLY_CRYING_FACE), UM(UC_FACE_ROLLING_EYES), UM(UC_FACE_RAISED_EYEBROW),      UM(UC_DISAPPOINTED_FACE), _______,
+      _______, _______, _______, KC_VOLU, _______,  QWERTY,                                     UM(UC_THUMBSUP),    UM(UC_FACE_SYMBOLS_MOUTH), UM(UC_SMIRKING_FACE),     UM(UC_ZANY_FACE),                UM(UC_WINKING_FACE),      _______,
+      _______, _______, KC_MPRV, KC_VOLD, KC_MNXT, COLEMAK,                                     UM(UC_WAVING_HAND), UM(UC_GRINNING_FACE),      UM(UC_BEAMING_FACE),      UM(UC_GRINNING_FACE_WITH_SWEAT), UM(UC_FACE_TEARS_JOY),    _______,
+      _______, _______, _______, KC_MPLY, KC_MUTE,    GAME, _______, _______, _______, _______, UM(UC_THUMBSDOWN),  UM(UC_LOUDLY_CRYING_FACE), UM(UC_FACE_ROLLING_EYES), UM(UC_FACE_RAISED_EYEBROW),      UM(UC_DISAPPOINTED_FACE), _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -269,7 +187,21 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("a s d f g  h j k l ;\n"), false);
                 oled_write_P(PSTR("z x c v b  n m , . /\n"), false);
                 break;
-            
+
+            case _COLEMAK:
+                oled_write_P(PSTR("COLEMAK\n\n"), false);
+                oled_write_P(PSTR("q w f p b  j l u y ;\n"), false);
+                oled_write_P(PSTR("a r s t g  m n e i o\n"), false);
+                oled_write_P(PSTR("z x c d v  k h , . /\n"), false);
+                break;
+
+            case _GAME:
+                oled_write_P(PSTR("GAME\n\n"), false);
+                oled_write_P(PSTR("q w e r t  y u i o p\n"), false);
+                oled_write_P(PSTR("a s d f g  h j k l ;\n"), false);
+                oled_write_P(PSTR("z x c v b  n m , . /\n"), false);
+                break;
+
             case _NAV:
                 oled_write_P(PSTR("Navigation\n\n"), false);
                 oled_write_P(PSTR(". b t d up . . . . .\n"), false);
