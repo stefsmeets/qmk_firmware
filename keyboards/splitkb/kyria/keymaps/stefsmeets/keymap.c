@@ -18,15 +18,15 @@
 #include "emoji.h"
 
 enum layers {
-    _QWERTY = 0,
-    _COLEMAK,
+    _COLEMAK = 0,
+    _QWERTY,
     _GAME,
     _SYMBOL,
     _NAV,
     _NUM,
     _FUNCTION,
     _ADJUST,
-};
+}
 
 
 // Aliases for readability
@@ -78,19 +78,19 @@ tap_dance_action_t tap_dance_actions[] = {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-// Base Layer: QWERTY
-
-    [_QWERTY] = LAYOUT(
-      KC_ESC ,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC,
-      SFT_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, SFT_QUO,
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_CAPS,    FUNC, KC_PSCR, QK_LEAD,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LCTL,
-                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, NUM_ENT, SFT_SFT,  KC_SPC,     NAV, KC_BSPC, KC_DEL
-    ),
+// Base Layer: COLEMAK
 
     [_COLEMAK] = LAYOUT(
-      _______,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, _______,
-      _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
-      _______,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, _______, _______, _______, _______,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, _______,
+       KC_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
+      SFT_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O, SFT_QUO,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_CAPS,    FUNC, KC_PSCR, QK_LEAD,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_DEL,
+                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, NUM_ENT, SFT_SFT,  KC_SPC,     NAV, KC_LEFT, KC_RGHT
+    ),
+
+    [_QWERTY] = LAYOUT(
+      _______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______,
+      _______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______,
+      _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______, _______, _______, _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -119,15 +119,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, KC_BSPC,  KC_TAB,  KC_DEL, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
       _______, _______, KC_HOME, KC_DOWN, KC_END,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_RGHT
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 //  Layer: Number
 
     [_NUM] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_SLSH,    KC_7,    KC_8,    KC_9, KC_MINS, _______,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR,    KC_4,    KC_5,    KC_6,  KC_DOT, KC_PLUS,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    KC_0,    KC_1,    KC_2,    KC_3,  KC_EQL, _______,
+      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR,    KC_4,    KC_5,    KC_6, KC_PLUS,  KC_ENT,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    KC_0,    KC_1,    KC_2,    KC_3,  KC_DOT, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -140,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
-// Adjust Layer: Music, Locks
+// Adjust Layer: Music, Emoji
 
     [_ADJUST] = LAYOUT(
       _______, _______, _______, KC_VOLU, _______,  QWERTY,                                     UM(UC_THUMBSUP),    UM(UC_FACE_SYMBOLS_MOUTH), UM(UC_SMIRKING_FACE),     UM(UC_ZANY_FACE),                UM(UC_WINKING_FACE),      _______,
@@ -173,81 +173,5 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 #ifdef OLED_ENABLE
-oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
-
-bool oled_task_user(void) {
-    if (is_keyboard_master()) {
-
-        oled_write_P(PSTR("Layer: "), false);
-        
-        switch (get_highest_layer(layer_state|default_layer_state)) {
-            case _QWERTY:
-                oled_write_P(PSTR("QWERTY\n\n"), false);
-                oled_write_P(PSTR("q w e r t  y u i o p\n"), false);
-                oled_write_P(PSTR("a s d f g  h j k l ;\n"), false);
-                oled_write_P(PSTR("z x c v b  n m , . /\n"), false);
-                break;
-
-            case _COLEMAK:
-                oled_write_P(PSTR("COLEMAK\n\n"), false);
-                oled_write_P(PSTR("q w f p b  j l u y ;\n"), false);
-                oled_write_P(PSTR("a r s t g  m n e i o\n"), false);
-                oled_write_P(PSTR("z x c d v  k h , . /\n"), false);
-                break;
-
-            case _GAME:
-                oled_write_P(PSTR("GAME\n\n"), false);
-                oled_write_P(PSTR("q w e r t  y u i o p\n"), false);
-                oled_write_P(PSTR("a s d f g  h j k l ;\n"), false);
-                oled_write_P(PSTR("z x c v b  n m , . /\n"), false);
-                break;
-
-            case _NAV:
-                oled_write_P(PSTR("Navigation\n\n"), false);
-                oled_write_P(PSTR(". b t d up . . . . .\n"), false);
-                oled_write_P(PSTR(". < ^ > dn . S C A G\n"), false);
-                oled_write_P(PSTR(". h v e .  . . . . .\n"), false);
-                break;
-            
-            case _SYMBOL:
-                oled_write_P(PSTR("Symbol\n\n"), false);
-                oled_write_P(PSTR("@ _ [ ] ^  ! < > = &\n"), false);
-                oled_write_P(PSTR("\\ / { } *  ? ( ) - :\n"), false);
-                oled_write_P(PSTR("# $ | ~ `  + % \" ' ;\n"), false);
-                break;
-            
-            case _NUM:
-                oled_write_P(PSTR("Number\n\n"), false);
-                oled_write_P(PSTR(". . . . .  / 7 8 9 -\n"), false);
-                oled_write_P(PSTR("G A C S .  * 4 5 6 ,\n"), false);
-                oled_write_P(PSTR(". . . . .  0 1 2 3 =\n"), false);
-                break;
-            
-            case _FUNCTION:
-                oled_write_P(PSTR("Function\n\n"), false);
-                oled_write_P(PSTR(". . . . .  . 7 8 9 0\n"), false);
-                oled_write_P(PSTR("G A C S .  . 4 5 6 1\n"), false);
-                oled_write_P(PSTR(". . . . .  . 1 2 3 2\n"), false);
-                break;
-            
-            case _ADJUST:
-                oled_write_P(PSTR("Adjust\n\n"), false);
-                oled_write_P(PSTR(". . ^ . .  e e e e e\n"), false);
-                oled_write_P(PSTR(".<< v >>.  e e e e e\n"), false);
-                oled_write_P(PSTR(". . p m .  e e e e e\n"), false);
-                break;
-            
-            default:
-                oled_write_P(PSTR("Undefined\n"), false);
-        }
-
-        // Write host Keyboard LED Status to OLEDs
-        led_t led_usb_state = host_keyboard_led_state();
-        oled_write_P(led_usb_state.num_lock    ? PSTR("\nNUM ") : PSTR("\n    "), false);
-        oled_write_P(led_usb_state.caps_lock   ? PSTR("CAP ") : PSTR("    "), false);
-        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
-    }
-    return false;
-}
+    #include "oled.h"
 #endif
-
