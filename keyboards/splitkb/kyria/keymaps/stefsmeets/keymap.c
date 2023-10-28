@@ -23,10 +23,10 @@ enum layers {
     _GAME,
     _SYMBOL,
     _NAV,
-    _NUM,
+    // _NUM,
     _FUNCTION,
     _ADJUST,
-}
+};
 
 
 // Aliases for readability
@@ -83,8 +83,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK] = LAYOUT(
        KC_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
       SFT_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O, SFT_QUO,
-      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V, KC_CAPS,    FUNC, KC_PSCR, QK_LEAD,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_DEL,
-                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, NUM_ENT, SFT_SFT,  KC_SPC,     NAV, KC_LEFT, KC_RGHT
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,  KC_GRV, KC_CAPS, KC_PSCR, KC_MINS,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_DEL,
+                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, FUN_ENT,  KC_ESC, SFT_SFT,     NAV, KC_LEFT, KC_RGHT
     ),
 
     [_QWERTY] = LAYOUT(
@@ -101,42 +101,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
-// Layer: Neo symbols
-// https://github.com/Dakes/qmk_config/blob/main/kyria/keymaps/dakes/keymap.c
-// https://www.neo-layout.org/
-// 20231002 Swap position [] and {}
-
+//  Layer: Symbol
     [_SYMBOL] = LAYOUT(
-      _______,   KC_AT, KC_UNDS, KC_LCBR, KC_RCBR, KC_CIRC,                                     KC_EXLM, KC_LABK, KC_RABK,  KC_EQL, KC_AMPR, _______,
-      _______, KC_BSLS, KC_SLSH, KC_LBRC, KC_RBRC, KC_ASTR,                                     KC_QUES, KC_LPRN, KC_RPRN, KC_MINS, KC_COLN, _______,
-      _______, KC_HASH,  KC_DLR, KC_PIPE, KC_TILD, KC_GRV , _______, _______, _______, _______, KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      _______, KC_PLUS, KC_MINS, KC_LBRC, KC_RBRC, KC_EXLM,                                      KC_DLR,    KC_7,    KC_8,    KC_9, KC_CIRC, _______,
+      _______,  KC_EQL, KC_UNDS, KC_LPRN, KC_RPRN, KC_COLN,                                     KC_ASTR,    KC_4,    KC_5,    KC_6, KC_PIPE,  KC_ENT,
+      _______, KC_AMPR, KC_PERC, KC_LCBR, KC_RCBR,   KC_AT, _______, _______, _______, _______, KC_HASH,    KC_1,    KC_2,    KC_3, KC_BSLS, _______,
+                                 _______, _______, _______, _______, _______, KC_COMM,    KC_0,  KC_DOT, _______, _______
     ),
 
 //  Layer: Navigation
-
     [_NAV] = LAYOUT(
       _______, _______, KC_BSPC,  KC_TAB,  KC_DEL, KC_PGUP,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, KC_LEFT,   KC_UP, KC_RGHT, KC_PGDN,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
-      _______, _______, KC_HOME, KC_DOWN, KC_END,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-
-//  Layer: Number
-
-    [_NUM] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     KC_SLSH,    KC_7,    KC_8,    KC_9, KC_MINS, _______,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR,    KC_4,    KC_5,    KC_6, KC_PLUS,  KC_ENT,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,    KC_0,    KC_1,    KC_2,    KC_3,  KC_DOT, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      _______, _______, KC_HOME, KC_DOWN, KC_END,  _______, _______, _______, _______, _______, KC_AGIN, KC_PSTE, KC_COPY,  KC_CUT, KC_UNDO, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______,   KC_UP, KC_DOWN
     ),
 
 //  Layer: Function
-
     [_FUNCTION] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     _______,   KC_F4,   KC_F5,   KC_F6,  KC_F11, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_F1,   KC_F2,   KC_F3,  KC_F12, _______,
+      _______, KC_UNDO, KC_CUT,  KC_COPY, KC_PSTE, KC_AGIN, _______, _______, _______, _______, _______,   KC_F1,   KC_F2,   KC_F3,  KC_F12, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
