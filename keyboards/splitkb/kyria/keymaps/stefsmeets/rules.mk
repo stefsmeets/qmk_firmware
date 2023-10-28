@@ -4,6 +4,9 @@ RGB_MATRIX_ENABLE = no    # Disable keyboard RGB matrix, as it is enabled by def
 RGBLIGHT_ENABLE = no      # Enable keyboard RGB underglow
 CONVERT_TO = liatris
 
+# https://docs.qmk.fm/#/feature_mouse_keys
+MOUSEKEY_ENABLE = yes
+
 # https://docs.qmk.fm/#/feature_unicode
 UNICODE_COMMON = yes
 UNICODEMAP_ENABLE = yes

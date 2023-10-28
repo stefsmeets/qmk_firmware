@@ -23,7 +23,7 @@ enum layers {
     _GAME,
     _SYMBOL,
     _NAV,
-    // _NUM,
+    _MOUSE,
     _FUNCTION,
     _ADJUST,
 };
@@ -37,6 +37,7 @@ enum layers {
 #define SYM      MO(_SYMBOL)
 #define NAV      MO(_NAV)
 #define NUM      MO(_NUM)
+#define MOUSE    MO(_MOUSE)
 #define FUNC     MO(_FUNCTION)
 #define ADJUST   MO(_ADJUST)
 
@@ -50,6 +51,12 @@ enum layers {
 
 #define FUN_ENT  LT(_FUNCTION, KC_ENT)
 #define NUM_ENT  LT(_NUM, KC_ENT)
+
+#define MSE_ESC  LT(_MOUSE, KC_ESC)
+
+#define NXT_TAB  C(KC_TAB)
+#define PRV_TAB  C(S(KC_TAB))
+
 
 // Tap Dance declarations
 enum {
@@ -84,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
       SFT_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O, SFT_QUO,
       KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,  KC_GRV, KC_CAPS, KC_PSCR, KC_MINS,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH,  KC_DEL,
-                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, FUN_ENT,  KC_ESC, SFT_SFT,     NAV, KC_LEFT, KC_RGHT
+                                 KC_LGUI, KC_LALT,     SYM,  KC_SPC, FUN_ENT, MSE_ESC, SFT_SFT,     NAV, KC_LEFT, KC_RGHT
     ),
 
     [_QWERTY] = LAYOUT(
@@ -117,6 +124,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______,   KC_UP, KC_DOWN
     ),
 
+    [_MOUSE] = LAYOUT(
+      _______, _______, PRV_TAB, _______, NXT_TAB, KC_WH_U,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, KC_MS_L, KC_MS_U, KC_MS_R, KC_WH_D,                                     _______, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______,
+      _______, _______, KC_WH_L, KC_MS_D, KC_WH_R, _______, _______, _______, _______, _______, KC_AGIN, KC_PSTE, KC_COPY,  KC_CUT, KC_UNDO, _______,
+                                 _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, _______, _______, _______, _______
+    ),
+
 //  Layer: Function
     [_FUNCTION] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______,
@@ -128,11 +142,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Adjust Layer: Music, Emoji
 
     [_ADJUST] = LAYOUT(
-      _______, _______, _______, KC_VOLU, _______,  QWERTY,                                     UM(UC_THUMBSUP),    UM(UC_FACE_SYMBOLS_MOUTH), UM(UC_SMIRKING_FACE),     UM(UC_ZANY_FACE),                UM(UC_WINKING_FACE),      _______,
-      _______, _______, KC_MPRV, KC_VOLD, KC_MNXT, COLEMAK,                                     UM(UC_WAVING_HAND), UM(UC_GRINNING_FACE),      UM(UC_BEAMING_FACE),      UM(UC_GRINNING_FACE_WITH_SWEAT), UM(UC_FACE_TEARS_JOY),    _______,
-      _______, _______, _______, KC_MPLY, KC_MUTE,    GAME, _______, _______, _______, _______, UM(UC_THUMBSDOWN),  UM(UC_LOUDLY_CRYING_FACE), UM(UC_FACE_ROLLING_EYES), UM(UC_FACE_RAISED_EYEBROW),      UM(UC_DISAPPOINTED_FACE), _______,
+      _______, _______, _______, KC_MPLY, KC_MUTE,  QWERTY,                                     UM(UC_THUMBSUP),    UM(UC_FACE_SYMBOLS_MOUTH), UM(UC_SMIRKING_FACE),     UM(UC_ZANY_FACE),                UM(UC_WINKING_FACE),      _______,
+      _______, _______, KC_MPRV, KC_VOLU, KC_MNXT, COLEMAK,                                     UM(UC_WAVING_HAND), UM(UC_GRINNING_FACE),      UM(UC_BEAMING_FACE),      UM(UC_GRINNING_FACE_WITH_SWEAT), UM(UC_FACE_TEARS_JOY),    _______,
+      _______, _______, _______, KC_VOLD, _______,    GAME, _______, _______, _______, _______, UM(UC_THUMBSDOWN),  UM(UC_LOUDLY_CRYING_FACE), UM(UC_FACE_ROLLING_EYES), UM(UC_FACE_RAISED_EYEBROW),      UM(UC_DISAPPOINTED_FACE), _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
+
 
 //  */
 //     [_LAYERINDEX] = LAYOUT(
