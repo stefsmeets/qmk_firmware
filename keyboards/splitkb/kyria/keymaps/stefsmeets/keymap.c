@@ -21,6 +21,7 @@ enum layers {
     _COLEMAK = 0,
     _QWERTY,
     _GAME,
+    _GAME2,
     _SYMBOL,
     _NAV,
     _MOUSE,
@@ -34,6 +35,7 @@ enum layers {
 #define COLEMAK  DF(_COLEMAK)
 #define GAME     DF(_GAME)
 
+#define GAME2    MO(_GAME2)
 #define SYM      MO(_SYMBOL)
 #define NAV      MO(_NAV)
 #define NUM      MO(_NUM)
@@ -102,10 +104,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_GAME] = LAYOUT(
-      _______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______,
-      _______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, _______,
-      _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______, _______, _______, _______,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+       KC_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, _______,
+      KC_LSFT,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O, _______,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,   KC_F6,   KC_F7, XXXXXXX, XXXXXXX,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, _______,
+                                 _______, _______,   GAME2,  KC_SPC,  KC_ENT, _______, _______, _______, _______, _______
+    ),
+
+    [_GAME2] = LAYOUT(
+       KC_TAB,    KC_F1,   KC_F2,  KC_F3,   KC_F4,   KC_F5,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, COLEMAK,
+      KC_LSFT,     KC_1,    KC_2,   KC_3,    KC_4,    KC_5,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      KC_LCTL,     KC_6,    KC_7,   KC_8,    KC_9,    KC_0, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                 _______, _______, _______,  KC_SPC,  KC_ENT, _______, _______, _______, _______, _______
     ),
 
 //  Layer: Symbol
